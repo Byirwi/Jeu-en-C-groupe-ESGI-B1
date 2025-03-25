@@ -138,10 +138,16 @@ int main() {
 
     } else if (mode_jeu == 1) { // Joueur contre Ordinateur
         struct Joueur joueur; // Déclaration de la structure Joueur
+        int choix_ordi_total[3] = {0, 0, 0}; // Compteur pour les choix de l'ordinateur
 
         printf("Entrez votre nom : ");
         scanf("%s", joueur.nom); // Saisir le nom du joueur
         joueur.score = 0; // Initialiser le score du joueur à 0
+
+        // Initialiser les compteurs de choix
+        joueur.choix_total[0] = 0;
+        joueur.choix_total[1] = 0;
+        joueur.choix_total[2] = 0;
 
         printf("Choisissez un niveau de difficulté :\n");
         printf("0 - Facile\n");
@@ -162,11 +168,15 @@ int main() {
                 break;
             }
 
-            choix_pc_resultat = choix_pc(niveau_difficulte); // Choisir le coup de l'ordinateur
+            choix_pc_resultat = choix_pc(niveau_difficulte);
+
+            // Mettre à jour les compteurs de choix
+            joueur.choix_total[choix_joueur1]++;
+            choix_ordi_total[choix_pc_resultat]++;
 
             if (choix_pc_resultat == -1) {
                 printf("Niveau de difficulté incorrect.\n");
-                return 1; // Arrêter le programme
+                return 1;
             }
 
             printf("Vous avez choisi : %d\n", choix_joueur1);
@@ -178,22 +188,37 @@ int main() {
             if ((choix_joueur1 == 0 && choix_pc_resultat == 2) ||
                 (choix_joueur1 == 1 && choix_pc_resultat == 0) ||
                 (choix_joueur1 == 2 && choix_pc_resultat == 1)) {
-                joueur.score++; // Incrémenter le score du joueur
+                joueur.score++;
             } else if (choix_joueur1 != choix_pc_resultat) {
-                // Le score de l'ordinateur n'est pas nécessaire ici, car il est implicite
+                // Le score de l'ordinateur n'est pas nécessaire ici
             }
 
-            printf("Score actuel - %s : %d, Ordinateur : %d\n", joueur.nom, joueur.score, tours - joueur.score);
+            printf("Score actuel - %s : %d, Ordinateur : %d\n", joueur.nom, joueur.score, i + 1 - joueur.score);
         }
 
         // Déclaration du gagnant final
-        if (joueur.score > tours - joueur.score) {
-            printf("Félicitations %s, vous avez gagné la partie avec un score de %d contre %d !\n", joueur.nom, joueur.score, tours - joueur.score);
-        } else if (joueur.score < tours - joueur.score) {
-            printf("L'ordinateur a gagné la partie avec un score de %d contre %d !\n", tours - joueur.score, joueur.score);
+        int score_ordi = tours - joueur.score;
+        if (joueur.score > score_ordi) {
+            printf("Félicitations %s, vous avez gagné la partie avec un score de %d contre %d !\n", joueur.nom, joueur.score, score_ordi);
+        } else if (joueur.score < score_ordi) {
+            printf("L'ordinateur a gagné la partie avec un score de %d contre %d !\n", score_ordi, joueur.score);
         } else {
             printf("La partie se termine par une égalité !\n");
         }
+
+        // Affichage des statistiques
+        printf("\nStatistiques :\n");
+        printf("%s :\n", joueur.nom);
+        printf("  - Pourcentage de victoires : %.2f%%\n", (double)joueur.score / tours * 100);
+        printf("  - Pierre : %d\n", joueur.choix_total[0]);
+        printf("  - Papier : %d\n", joueur.choix_total[1]);
+        printf("  - Ciseaux : %d\n", joueur.choix_total[2]);
+
+        printf("Ordinateur :\n");
+        printf("  - Pourcentage de victoires : %.2f%%\n", (double)score_ordi / tours * 100);
+        printf("  - Pierre : %d\n", choix_ordi_total[0]);
+        printf("  - Papier : %d\n", choix_ordi_total[1]);
+        printf("  - Ciseaux : %d\n", choix_ordi_total[2]);
     } else {
         printf("Mode de jeu incorrect.\n");
         return 1; // Arrêter le programme
@@ -201,7 +226,3 @@ int main() {
 
     return 0;
 }
-
-
-
-
