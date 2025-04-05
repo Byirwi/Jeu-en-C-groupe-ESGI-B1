@@ -30,6 +30,6 @@ Après avoir lancé le jeu, suivez les instructions à l'écran pour choisir ent
 
 Auteurs:
 
-Mayzer (nom de famille)
-Tania (nom de famille)
+Mayzer QADOUMI
+Tania ORMENO GALVEZ
 Louka DE PAIVA ABREU
