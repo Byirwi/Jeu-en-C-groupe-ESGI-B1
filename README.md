@@ -31,5 +31,7 @@ Après avoir lancé le jeu, suivez les instructions à l'écran pour choisir ent
 Auteurs:
 
 Mayzer QADOUMI
+
 Tania ORMENO GALVEZ
+
 Louka DE PAIVA ABREU
